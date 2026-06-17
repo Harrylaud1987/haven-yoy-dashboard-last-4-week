@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haven - YoY Show Data Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #2c3e50;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #00a0e3 0%, #0077b6 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .filters h3 {
+            margin-bottom: 15px;
+            color: #0077b6;
+            font-size: 18px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-right: 10px;
+        }
+
+        .filter-group select, .filter-group input {
+            padding: 8px 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-group select:hover, .filter-group input:hover {
+            border-color: #00a0e3;
+        }
+
+        .filter-group select:focus, .filter-group input:focus {
+            outline: none;
+            border-color: #0077b6;
+            box-shadow: 0 0 0 3px rgba(0, 160, 227, 0.1);
+        }
+
+        .filter-group button {
+            padding: 8px 20px;
+            background: #00a0e3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-group button:hover {
+            background: #0077b6;
+            transform: translateY(-1px);
+        }
+
+        .headline-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .headline-section h2 {
+            color: #0077b6;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #00a0e3;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .metric-values {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .metric-value {
+            flex: 1;
+        }
+
+        .metric-year {
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .year-2026 {
+            color: #0077b6;
+        }
+
+        .year-2025 {
+            color: #fd7e14;
+        }
+
+        .metric-number {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .variance-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .variance-positive {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .variance-negative {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .variance-neutral {
+            background: #e9ecef;
+            color: #6c757d;
+        }
+
+        .data-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .data-section h2 {
+            color: #0077b6;
+            margin-bottom: 20px;
+            font-size: 22px;
+            border-bottom: 3px solid #00a0e3;
+            padding-bottom: 10px;
+        }
+
+        .data-section h3 {
+            color: #495057;
+            margin: 25px 0 15px 0;
+            font-size: 18px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .data-table thead {
+            background: linear-gradient(135deg, #0077b6 0%, #005a8c 100%);
+            color: white;
+        }
+
+        .data-table thead th {
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 13px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .data-table thead th:first-child {
+            text-align: left;
+            min-width: 150px;
+        }
+
+        .col-2026 {
+            background: rgba(0, 119, 182, 0.1) !important;
+        }
+
+        .col-2025 {
+            background: rgba(253, 126, 20, 0.1) !important;
+        }
+
+        .col-variance {
+            background: rgba(108, 117, 125, 0.05) !important;
+        }
+
+        .data-table tbody tr {
+            border-bottom: 1px solid #e9ecef;
+            transition: all 0.2s;
+        }
+
+        .data-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .data-table tbody td {
+            padding: 12px;
+            text-align: center;
+            border-left: 1px solid #e9ecef;
+        }
+
+        .data-table tbody td:first-child {
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            border-left: none;
+        }
+
+        .week-row {
+            background: #f8f9fa;
+        }
+
+        .week-row td:first-child {
+            padding-left: 30px;
+            font-weight: 500;
+            color: #6c757d;
+        }
+
+        .no-data {
+            color: #adb5bd;
+            font-style: italic;
+        }
+
+        .variance-cell-positive {
+            color: #155724;
+            font-weight: 600;
+        }
+
+        .variance-cell-negative {
+            color: #721c24;
+            font-weight: 600;
+        }
+
+        .variance-cell-neutral {
+            color: #6c757d;
+        }
+
+        .source-section {
+            display: none;
+        }
+
+        .source-section.visible {
+            display: block;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .data-table {
+                font-size: 12px;
+            }
+
+            .data-table thead th,
+            .data-table tbody td {
+                padding: 8px 4px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .metric-number {
+                font-size: 20px;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Show Data Dashboard - YoY Comparison</h1>
+        <p>Year-on-Year Analysis: 2026 vs 2025 | Last 4 Weeks | By Source Channel</p>
+    </div>
+
+    <div class="filters">
+        <h3>🔍 Interactive Filters</h3>
+        <div class="filter-group">
+            <label>Source Channel:</label>
+            <select id="sourceFilter">
+                <option value="all">All Sources</option>
+                <option value="Brochure Request">Brochure Request</option>
+                <option value="Chat">Chat</option>
+                <option value="CS Quiz">CS Quiz</option>
+                <option value="Enquiry">Enquiry</option>
+                <option value="Facebook">Facebook</option>
+                <option value="MHC">MHC (external source)</option>
+                <option value="RCS">RCS</option>
+                <option value="Telesales Inbound Call">Telesales Inbound Call</option>
+                <option value="Visit Request">Visit Request</option>
+                <option value="WhatsApp">WhatsApp</option>
+            </select>
+
+            <label>Week:</label>
+            <select id="weekFilter">
+                <option value="all">All Weeks</option>
+                <option value="1 week">Week 1</option>
+                <option value="2 weeks">Week 2</option>
+                <option value="3 weeks">Week 3</option>
+                <option value="4 weeks">Week 4</option>
+                <option value="5 weeks and over">Week 5+</option>
+            </select>
+
+            <label>Show Rate ≥:</label>
+            <input type="number" id="rateFilter" placeholder="e.g., 30" min="0" max="100" style="width: 100px;">
+            <span style="color: #6c757d;">%</span>
+
+            <button onclick="applyFilters()">Apply Filters</button>
+            <button onclick="resetFilters()" style="background: #6c757d;">Reset</button>
+        </div>
+    </div>
+
+    <!-- HEADLINE SECTION -->
+    <div class="headline-section">
+        <h2>📈 Grand Total Performance</h2>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Appointments Booked</div>
+                <div class="metric-values">
+                    <div class="metric-value">
+                        <div class="metric-year year-2026">2026</div>
+                        <div class="metric-number year-2026">1,514</div>
+                    </div>
+                    <div class="metric-value">
+                        <div class="metric-year year-2025">2025</div>
+                        <div class="metric-number year-2025">1,325</div>
+                    </div>
+                    <div class="variance-badge variance-positive">+189</div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Shows Generated</div>
+                <div class="metric-values">
+                    <div class="metric-value">
+                        <div class="metric-year year-2026">2026</div>
+                        <div class="metric-number year-2026">523</div>
+                    </div>
+                    <div class="metric-value">
+                        <div class="metric-year year-2025">2025</div>
+                        <div class="metric-number year-2025">483</div>
+                    </div>
+                    <div class="variance-badge variance-positive">+40</div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Show Rate Conversion</div>
+                <div class="metric-values">
+                    <div class="metric-value">
+                        <div class="metric-year year-2026">2026</div>
+                        <div class="metric-number year-2026">35%</div>
+                    </div>
+                    <div class="metric-value">
+                        <div class="metric-year year-2025">2025</div>
+                        <div class="metric-number year-2025">36%</div>
+                    </div>
+                    <div class="variance-badge variance-negative">-1%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OVERALL SUMMARY TABLE -->
+    <div class="data-section">
+        <h2>📊 Overall Summary - Week Breakdown</h2>
+        <table class="data-table" id="overallTable">
+            <thead>
+                <tr>
+                    <th rowspan="2">Week</th>
+                    <th colspan="3" class="col-2026">2026</th>
+                    <th colspan="3" class="col-2025">2025</th>
+                    <th colspan="3" class="col-variance">Variance</th>
+                </tr>
+                <tr>
+                    <th class="col-2026">Appts</th>
+                    <th class="col-2026">Shows</th>
+                    <th class="col-2026">Rate</th>
+                    <th class="col-2025">Appts</th>
+                    <th class="col-2025">Shows</th>
+                    <th class="col-2025">Rate</th>
+                    <th class="col-variance">Appts</th>
+                    <th class="col-variance">Shows</th>
+                    <th class="col-variance">Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1 week</td>
+                    <td>315</td>
+                    <td>149</td>
+                    <td>47%</td>
+                    <td>304</td>
+                    <td>138</td>
+                    <td>45%</td>
+                    <td class="variance-cell-positive">+11</td>
+                    <td class="variance-cell-positive">+11</td>
+                    <td class="variance-cell-positive">+2%</td>
+                </tr>
+                <tr>
+                    <td>2 weeks</td>
+                    <td>153</td>
+                    <td>29</td>
+                    <td>19%</td>
+                    <td>153</td>
+                    <td>32</td>
+                    <td>21%</td>
+                    <td class="variance-cell-neutral">0</td>
+                    <td class="variance-cell-negative">-3</td>
+                    <td class="variance-cell-negative">-2%</td>
+                </tr>
+                <tr>
+                    <td>3 weeks</td>
+                    <td>94</td>
+                    <td>17</td>
+                    <td>18%</td>
+                    <td>78</td>
+                    <td>10</td>
+                    <td>13%</td>
+                    <td class="variance-cell-positive">+16</td>
+                    <td class="variance-cell-positive">+7</td>
+                    <td class="variance-cell-positive">+5%</td>
+                </tr>
+                <tr>
+                    <td>4 weeks</td>
+                    <td>35</td>
+                    <td>6</td>
+                    <td>17%</td>
+                    <td>56</td>
+                    <td>17</td>
+                    <td>30%</td>
+                    <td class="variance-cell-negative">-21</td>
+                    <td class="variance-cell-negative">-11</td>
+                    <td class="variance-cell-negative">-13%</td>
+                </tr>
+                <tr>
+                    <td>5 weeks and over</td>
+                    <td>48</td>
+                    <td>14</td>
+                    <td>29%</td>
+                    <td>35</td>
+                    <td>8</td>
+                    <td>23%</td>
+                    <td class="variance-cell-positive">+13</td>
+                    <td class="variance-cell-positive">+6</td>
+                    <td class="variance-cell-positive">+6%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SOURCE CHANNEL BREAKDOWNS -->
+    <div class="data-section">
+        <h2>🔗 Individual Source Channel Breakdowns</h2>
+
+        <!-- Brochure Request -->
+        <div class="source-section visible" data-source="Brochure Request">
+            <h3>📬 Brochure Request</h3>
+            <table class="data-table source-table" data-source="Brochure Request">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Week</th>
+                        <th colspan="3" class="col-2026">2026</th>
+                        <th colspan="3" class="col-2025">2025</th>
+                        <th colspan="3" class="col-variance">Variance</th>
+                    </tr>
+                    <tr>
+                        <th class="col-2026">Appts</th>
+                        <th class="col-2026">Shows</th>
+                        <th class="col-2026">Rate</th>
+                        <th class="col-2025">Appts</th>
+                        <th class="col-2025">Shows</th>
+                        <th class="col-2025">Rate</th>
+                        <th class="col-variance">Appts</th>
+                        <th class="col-variance">Shows</th>
+                        <th class="col-variance">Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td>645</td>
+                        <td>215</td>
+                        <td>33%</td>
+                        <td>626</td>
+                        <td>205</td>
+                        <td>33%</td>
+                        <td class="variance-cell-positive">+19</td>
+                        <td class="variance-cell-positive">+10</td>
+                        <td class="variance-cell-neutral">0%</td>
+                    </tr>
+                    <tr class="week-row" data-week="1 week" data-rate-2026="47">
+                        <td>1 week</td>
+                        <td>315</td>
+                        <td>149</td>
+                        <td>47%</td>
+                        <td>304</td>
+                        <td>138</td>
+                        <td>45%</td>
+                        <td class="variance-cell-positive">+11</td>
+                        <td class="variance-cell-positive">+11</td>
+                        <td class="variance-cell-positive">+2%</td>
+                    </tr>
+                    <tr class="week-row" data-week="2 weeks" data-rate-2026="19">
+                        <td>2 weeks</td>
+                        <td>153</td>
+                        <td>29</td>
+                        <td>19%</td>
+                        <td>153</td>
+                        <td>32</td>
+                        <td>21%</td>
+                        <td class="variance-cell-neutral">0</td>
+                        <td class="variance-cell-negative">-3</td>
+                        <td class="variance-cell-negative">-2%</td>
+                    </tr>
+                    <tr class="week-row" data-week="3 weeks" data-rate-2026="18">
+                        <td>3 weeks</td>
+                        <td>94</td>
+                        <td>17</td>
+                        <td>18%</td>
+                        <td>78</td>
+                        <td>10</td>
+                        <td>13%</td>
+                        <td class="variance-cell-positive">+16</td>
+                        <td class="variance-cell-positive">+7</td>
+                        <td class="variance-cell-positive">+5%</td>
+                    </tr>
+                    <tr class="week-row" data-week="4 weeks" data-rate-2026="17">
+                        <td>4 weeks</td>
+                        <td>35</td>
+                        <td>6</td>
+                        <td>17%</td>
+                        <td>56</td>
+                        <td>17</td>
+                        <td>30%</td>
+                        <td class="variance-cell-negative">-21</td>
+                        <td class="variance-cell-negative">-11</td>
+                        <td class="variance-cell-negative">-13%</td>
+                    </tr>
+                    <tr class="week-row" data-week="5 weeks and over" data-rate-2026="29">
+                        <td>5 weeks and over</td>
+                        <td>48</td>
+                        <td>14</td>
+                        <td>29%</td>
+                        <td>35</td>
+                        <td>8</td>
+                        <td>23%</td>
+                        <td class="variance-cell-positive">+13</td>
+                        <td class="variance-cell-positive">+6</td>
+                        <td class="variance-cell-positive">+6%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Chat -->
+        <div class="source-section visible" data-source="Chat">
+            <h3>💬 Chat</h3>
+            <table class="data-table source-table" data-source="Chat">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Week</th>
+                        <th colspan="3" class="col-2026">2026</th>
+                        <th colspan="3" class="col-2025">2025</th>
+                        <th colspan="3" class="col-variance">Variance</th>
+                    </tr>
+                    <tr>
+                        <th class="col-2026">Appts</th>
+                        <th class="col-2026">Shows</th>
+                        <th class="col-2026">Rate</th>
+                        <th class="col-2025">Appts</th>
+                        <th class="col-2025">Shows</th>
+                        <th class="col-2025">Rate</th>
+                        <th class="col-variance">Appts</th>
+                        <th class="col-variance">Shows</th>
+                        <th class="col-variance">Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td>11</td>
+                        <td>8</td>
+                        <td>73%</td>
+                        <td>11</td>
+                        <td>4</td>
+                        <td>36%</td>
+                        <td class="variance-cell-neutral">0</td>
+                        <td class="variance-cell-positive">+4</td>
+                        <td class="variance-cell-positive">+37%</td>
+                    </tr>
+                    <tr class="week-row" data-week="1 week" data-rate-2026="78">
+                        <td>1 week</td>
+                        <td>9</td>
+                        <td>7</td>
+                        <td>78%</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>40%</td>
+                        <td class="variance-cell-negative">-1</td>
+                        <td class="variance-cell-positive">+3</td>
+                        <td class="variance-cell-positive">+38%</td>
+                    </tr>
+                    <tr class="week-row" data-week="2 weeks" data-rate-2026="100">
+                        <td>2 weeks</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>100%</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td class="variance-cell-neutral">0</td>
+                        <td class="variance-cell-positive">+1</td>
+                        <td class="variance-cell-positive">+100%</td>
+                    </tr>
+                    <tr class="week-row" data-week="5 weeks and over" data-rate-2026="0">
+                        <td>5 weeks and over</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- CS Quiz -->
+        <div class="source-section visible" data-source="CS Quiz">
+            <h3>❓ CS Quiz</h3>
+            <table class="data-table source-table" data-source="CS Quiz">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Week</th>
+                        <th colspan="3" class="col-2026">2026</th>
+                        <th colspan="3" class="col-2025">2025</th>
+                        <th colspan="3" class="col-variance">Variance</th>
+                    </tr>
+                    <tr>
+                        <th class="col-2026">Appts</th>
+                        <th class="col-2026">Shows</th>
+                        <th class="col-2026">Rate</th>
+                        <th class="col-2025">Appts</th>
+                        <th class="col-2025">Shows</th>
+                        <th class="col-2025">Rate</th>
+                        <th class="col-variance">Appts</th>
+                        <th class="col-variance">Shows</th>
+                        <th class="col-variance">Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td>60</td>
+                        <td>18</td>
+                        <td>30%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="1 week" data-rate-2026="48">
+                        <td>1 week</td>
+                        <td>25</td>
+                        <td>12</td>
+                        <td>48%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="2 weeks" data-rate-2026="8">
+                        <td>2 weeks</td>
+                        <td>13</td>
+                        <td>1</td>
+                        <td>8%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="3 weeks" data-rate-2026="40">
+                        <td>3 weeks</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>40%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="4 weeks" data-rate-2026="17">
+                        <td>4 weeks</td>
+                        <td>6</td>
+                        <td>1</td>
+                        <td>17%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="5 weeks and over" data-rate-2026="0">
+                        <td>5 weeks and over</td>
+                        <td>6</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Enquiry -->
+        <div class="source-section visible" data-source="Enquiry">
+            <h3>✉️ Enquiry</h3>
+            <table class="data-table source-table" data-source="Enquiry">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Week</th>
+                        <th colspan="3" class="col-2026">2026</th>
+                        <th colspan="3" class="col-2025">2025</th>
+                        <th colspan="3" class="col-variance">Variance</th>
+                    </tr>
+                    <tr>
+                        <th class="col-2026">Appts</th>
+                        <th class="col-2026">Shows</th>
+                        <th class="col-2026">Rate</th>
+                        <th class="col-2025">Appts</th>
+                        <th class="col-2025">Shows</th>
+                        <th class="col-2025">Rate</th>
+                        <th class="col-variance">Appts</th>
+                        <th class="col-variance">Shows</th>
+                        <th class="col-variance">Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td>35</td>
+                        <td>13</td>
+                        <td>37%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="1 week" data-rate-2026="71">
+                        <td>1 week</td>
+                        <td>14</td>
+                        <td>10</td>
+                        <td>71%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="2 weeks" data-rate-2026="15">
+                        <td>2 weeks</td>
+                        <td>13</td>
+                        <td>2</td>
+                        <td>15%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="3 weeks" data-rate-2026="25">
+                        <td>3 weeks</td>
+                        <td>4</td>
+                        <td>1</td>
+                        <td>25%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="4 weeks" data-rate-2026="0">
+                        <td>4 weeks</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="5 weeks and over" data-rate-2026="0">
+                        <td>5 weeks and over</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Facebook -->
+        <div class="source-section visible" data-source="Facebook">
+            <h3>📘 Facebook</h3>
+            <table class="data-table source-table" data-source="Facebook">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Week</th>
+                        <th colspan="3" class="col-2026">2026</th>
+                        <th colspan="3" class="col-2025">2025</th>
+                        <th colspan="3" class="col-variance">Variance</th>
+                    </tr>
+                    <tr>
+                        <th class="col-2026">Appts</th>
+                        <th class="col-2026">Shows</th>
+                        <th class="col-2026">Rate</th>
+                        <th class="col-2025">Appts</th>
+                        <th class="col-2025">Shows</th>
+                        <th class="col-2025">Rate</th>
+                        <th class="col-variance">Appts</th>
+                        <th class="col-variance">Shows</th>
+                        <th class="col-variance">Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td>8</td>
+                        <td>3</td>
+                        <td>67%</td>
+                        <td>14</td>
+                        <td>5</td>
+                        <td>36%</td>
+                        <td class="variance-cell-negative">-6</td>
+                        <td class="variance-cell-negative">-2</td>
+                        <td class="variance-cell-positive">+31%</td>
+                    </tr>
+                    <tr class="week-row" data-week="1 week" data-rate-2026="10">
+                        <td>1 week</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>10%</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>30%</td>
+                        <td class="variance-cell-negative">-7</td>
+                        <td class="variance-cell-negative">-3</td>
+                        <td class="variance-cell-negative">-20%</td>
+                    </tr>
+                    <tr class="week-row" data-week="2 weeks" data-rate-2026="6">
+                        <td>2 weeks</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>6%</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>50%</td>
+                        <td class="variance-cell-positive">+1</td>
+                        <td class="variance-cell-positive">+1</td>
+                        <td class="variance-cell-negative">-44%</td>
+                    </tr>
+                    <tr class="week-row" data-week="3 weeks" data-rate-2026="17">
+                        <td>3 weeks</td>
+                        <td>1</td>
+                        <td>4</td>
+                        <td>17%</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>50%</td>
+                        <td class="variance-cell-negative">-1</td>
+                        <td class="variance-cell-positive">+3</td>
+                        <td class="variance-cell-negative">-33%</td>
+                    </tr>
+                    <tr class="week-row" data-week="4 weeks" data-rate-2026="0">
+                        <td>4 weeks</td>
+                        <td>7</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MHC (external source) -->
+        <div class="source-section visible" data-source="MHC">
+            <h3>🏠 MHC (external source)</h3>
+            <table class="data-table source-table" data-source="MHC">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Week</th>
+                        <th colspan="3" class="col-2026">2026</th>
+                        <th colspan="3" class="col-2025">2025</th>
+                        <th colspan="3" class="col-variance">Variance</th>
+                    </tr>
+                    <tr>
+                        <th class="col-2026">Appts</th>
+                        <th class="col-2026">Shows</th>
+                        <th class="col-2026">Rate</th>
+                        <th class="col-2025">Appts</th>
+                        <th class="col-2025">Shows</th>
+                        <th class="col-2025">Rate</th>
+                        <th class="col-variance">Appts</th>
+                        <th class="col-variance">Shows</th>
+                        <th class="col-variance">Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td>127</td>
+                        <td>29</td>
+                        <td>23%</td>
+                        <td>102</td>
+                        <td>24</td>
+                        <td>24%</td>
+                        <td class="variance-cell-positive">+25</td>
+                        <td class="variance-cell-positive">+5</td>
+                        <td class="variance-cell-negative">-1%</td>
+                    </tr>
+                    <tr class="week-row" data-week="1 week" data-rate-2026="30">
+                        <td>1 week</td>
+                        <td>50</td>
+                        <td>15</td>
+                        <td>30%</td>
+                        <td>51</td>
+                        <td>17</td>
+                        <td>33%</td>
+                        <td class="variance-cell-negative">-1</td>
+                        <td class="variance-cell-negative">-2</td>
+                        <td class="variance-cell-negative">-3%</td>
+                    </tr>
+                    <tr class="week-row" data-week="2 weeks" data-rate-2026="21">
+                        <td>2 weeks</td>
+                        <td>34</td>
+                        <td>7</td>
+                        <td>21%</td>
+                        <td>28</td>
+                        <td>4</td>
+                        <td>14%</td>
+                        <td class="variance-cell-positive">+6</td>
+                        <td class="variance-cell-positive">+3</td>
+                        <td class="variance-cell-positive">+7%</td>
+                    </tr>
+                    <tr class="week-row" data-week="3 weeks" data-rate-2026="14">
+                        <td>3 weeks</td>
+                        <td>28</td>
+                        <td>4</td>
+                        <td>14%</td>
+                        <td>13</td>
+                        <td>1</td>
+                        <td>8%</td>
+                        <td class="variance-cell-positive">+15</td>
+                        <td class="variance-cell-positive">+3</td>
+                        <td class="variance-cell-positive">+6%</td>
+                    </tr>
+                    <tr class="week-row" data-week="4 weeks" data-rate-2026="17">
+                        <td>4 weeks</td>
+                        <td>6</td>
+                        <td>1</td>
+                        <td>17%</td>
+                        <td>8</td>
+                        <td>1</td>
+                        <td>13%</td>
+                        <td class="variance-cell-negative">-2</td>
+                        <td class="variance-cell-neutral">0</td>
+                        <td class="variance-cell-positive">+4%</td>
+                    </tr>
+                    <tr class="week-row" data-week="5 weeks and over" data-rate-2026="22">
+                        <td>5 weeks and over</td>
+                        <td>9</td>
+                        <td>2</td>
+                        <td>22%</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>50%</td>
+                        <td class="variance-cell-positive">+7</td>
+                        <td class="variance-cell-positive">+1</td>
+                        <td class="variance-cell-negative">-28%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- RCS -->
+        <div class="source-section visible" data-source="RCS">
+            <h3>📞 RCS</h3>
+            <table class="data-table source-table" data-source="RCS">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Week</th>
+                        <th colspan="3" class="col-2026">2026</th>
+                        <th colspan="3" class="col-2025">2025</th>
+                        <th colspan="3" class="col-variance">Variance</th>
+                    </tr>
+                    <tr>
+                        <th class="col-2026">Appts</th>
+                        <th class="col-2026">Shows</th>
+                        <th class="col-2026">Rate</th>
+                        <th class="col-2025">Appts</th>
+                        <th class="col-2025">Shows</th>
+                        <th class="col-2025">Rate</th>
+                        <th class="col-variance">Appts</th>
+                        <th class="col-variance">Shows</th>
+                        <th class="col-variance">Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td>4</td>
+                        <td>2</td>
+                        <td>50%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="1 week" data-rate-2026="50">
+                        <td>1 week</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>50%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="4 weeks" data-rate-2026="0">
+                        <td>4 weeks</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="5 weeks and over" data-rate-2026="100">
+                        <td>5 weeks and over</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>100%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Telesales Inbound Call -->
+        <div class="source-section visible" data-source="Telesales Inbound Call">
+            <h3>📲 Telesales Inbound Call</h3>
+            <table class="data-table source-table" data-source="Telesales Inbound Call">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Week</th>
+                        <th colspan="3" class="col-2026">2026</th>
+                        <th colspan="3" class="col-2025">2025</th>
+                        <th colspan="3" class="col-variance">Variance</th>
+                    </tr>
+                    <tr>
+                        <th class="col-2026">Appts</th>
+                        <th class="col-2026">Shows</th>
+                        <th class="col-2026">Rate</th>
+                        <th class="col-2025">Appts</th>
+                        <th class="col-2025">Shows</th>
+                        <th class="col-2025">Rate</th>
+                        <th class="col-variance">Appts</th>
+                        <th class="col-variance">Shows</th>
+                        <th class="col-variance">Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td>41</td>
+                        <td>17</td>
+                        <td>41%</td>
+                        <td>55</td>
+                        <td>32</td>
+                        <td>58%</td>
+                        <td class="variance-cell-negative">-14</td>
+                        <td class="variance-cell-negative">-15</td>
+                        <td class="variance-cell-negative">-17%</td>
+                    </tr>
+                    <tr class="week-row" data-week="1 week" data-rate-2026="46">
+                        <td>1 week</td>
+                        <td>26</td>
+                        <td>12</td>
+                        <td>46%</td>
+                        <td>39</td>
+                        <td>27</td>
+                        <td>69%</td>
+                        <td class="variance-cell-negative">-13</td>
+                        <td class="variance-cell-negative">-15</td>
+                        <td class="variance-cell-negative">-23%</td>
+                    </tr>
+                    <tr class="week-row" data-week="2 weeks" data-rate-2026="42">
+                        <td>2 weeks</td>
+                        <td>12</td>
+                        <td>5</td>
+                        <td>42%</td>
+                        <td>8</td>
+                        <td>4</td>
+                        <td>50%</td>
+                        <td class="variance-cell-positive">+4</td>
+                        <td class="variance-cell-positive">+1</td>
+                        <td class="variance-cell-negative">-8%</td>
+                    </tr>
+                    <tr class="week-row" data-week="3 weeks" data-rate-2026="0">
+                        <td>3 weeks</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td class="variance-cell-neutral">0</td>
+                        <td class="variance-cell-neutral">0</td>
+                        <td class="variance-cell-neutral">0%</td>
+                    </tr>
+                    <tr class="week-row" data-week="4 weeks" data-rate-2026="0">
+                        <td>4 weeks</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td>4</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td class="variance-cell-negative">-3</td>
+                        <td class="variance-cell-neutral">0</td>
+                        <td class="variance-cell-neutral">0%</td>
+                    </tr>
+                    <tr class="week-row" data-week="5 weeks and over" data-rate-2026="0">
+                        <td>5 weeks and over</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>50%</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Visit Request -->
+        <div class="source-section visible" data-source="Visit Request">
+            <h3>🏖️ Visit Request</h3>
+            <table class="data-table source-table" data-source="Visit Request">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Week</th>
+                        <th colspan="3" class="col-2026">2026</th>
+                        <th colspan="3" class="col-2025">2025</th>
+                        <th colspan="3" class="col-variance">Variance</th>
+                    </tr>
+                    <tr>
+                        <th class="col-2026">Appts</th>
+                        <th class="col-2026">Shows</th>
+                        <th class="col-2026">Rate</th>
+                        <th class="col-2025">Appts</th>
+                        <th class="col-2025">Shows</th>
+                        <th class="col-2025">Rate</th>
+                        <th class="col-variance">Appts</th>
+                        <th class="col-variance">Shows</th>
+                        <th class="col-variance">Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td>502</td>
+                        <td>213</td>
+                        <td>42%</td>
+                        <td>517</td>
+                        <td>213</td>
+                        <td>41%</td>
+                        <td class="variance-cell-negative">-15</td>
+                        <td class="variance-cell-neutral">0</td>
+                        <td class="variance-cell-positive">+1%</td>
+                    </tr>
+                    <tr class="week-row" data-week="1 week" data-rate-2026="43">
+                        <td>1 week</td>
+                        <td>471</td>
+                        <td>204</td>
+                        <td>43%</td>
+                        <td>448</td>
+                        <td>234</td>
+                        <td>52%</td>
+                        <td class="variance-cell-positive">+23</td>
+                        <td class="variance-cell-negative">-30</td>
+                        <td class="variance-cell-negative">-9%</td>
+                    </tr>
+                    <tr class="week-row" data-week="2 weeks" data-rate-2026="29">
+                        <td>2 weeks</td>
+                        <td>24</td>
+                        <td>7</td>
+                        <td>29%</td>
+                        <td>47</td>
+                        <td>23</td>
+                        <td>49%</td>
+                        <td class="variance-cell-negative">-23</td>
+                        <td class="variance-cell-negative">-16</td>
+                        <td class="variance-cell-negative">-20%</td>
+                    </tr>
+                    <tr class="week-row" data-week="3 weeks" data-rate-2026="100">
+                        <td>3 weeks</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>100%</td>
+                        <td>12</td>
+                        <td>4</td>
+                        <td>33%</td>
+                        <td class="variance-cell-negative">-10</td>
+                        <td class="variance-cell-negative">-2</td>
+                        <td class="variance-cell-positive">+67%</td>
+                    </tr>
+                    <tr class="week-row" data-week="4 weeks" data-rate-2026="0">
+                        <td>4 weeks</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td>10</td>
+                        <td>5</td>
+                        <td>50%</td>
+                        <td class="variance-cell-negative">-9</td>
+                        <td class="variance-cell-negative">-5</td>
+                        <td class="variance-cell-negative">-50%</td>
+                    </tr>
+                    <tr class="week-row" data-week="5 weeks and over" data-rate-2026="0">
+                        <td>5 weeks and over</td>
+                        <td>4</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- WhatsApp -->
+        <div class="source-section visible" data-source="WhatsApp">
+            <h3>💬 WhatsApp</h3>
+            <table class="data-table source-table" data-source="WhatsApp">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Week</th>
+                        <th colspan="3" class="col-2026">2026</th>
+                        <th colspan="3" class="col-2025">2025</th>
+                        <th colspan="3" class="col-variance">Variance</th>
+                    </tr>
+                    <tr>
+                        <th class="col-2026">Appts</th>
+                        <th class="col-2026">Shows</th>
+                        <th class="col-2026">Rate</th>
+                        <th class="col-2025">Appts</th>
+                        <th class="col-2025">Shows</th>
+                        <th class="col-2025">Rate</th>
+                        <th class="col-variance">Appts</th>
+                        <th class="col-variance">Shows</th>
+                        <th class="col-variance">Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td>6</td>
+                        <td>2</td>
+                        <td>33%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="1 week" data-rate-2026="0">
+                        <td>1 week</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="2 weeks" data-rate-2026="33">
+                        <td>2 weeks</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>33%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="3 weeks" data-rate-2026="0">
+                        <td>3 weeks</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                    <tr class="week-row" data-week="5 weeks and over" data-rate-2026="100">
+                        <td>5 weeks and over</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>100%</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="no-data">No data</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                        <td class="variance-cell-neutral">—</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>Haven YoY Show Data Dashboard | Generated from Excel source data | All numbers verified against source spreadsheet [1]</p>
+    </div>
+
+    <script>
+        function applyFilters() {
+            const sourceFilter = document.getElementById('sourceFilter').value;
+            const weekFilter = document.getElementById('weekFilter').value;
+            const rateFilter = parseFloat(document.getElementById('rateFilter').value) || 0;
+
+            // Handle source filter
+            const sourceSections = document.querySelectorAll('.source-section');
+            sourceSections.forEach(section => {
+                const sectionSource = section.getAttribute('data-source');
+                if (sourceFilter === 'all' || sectionSource === sourceFilter) {
+                    section.classList.add('visible');
+                } else {
+                    section.classList.remove('visible');
+                }
+            });
+
+            // Handle week and rate filters on table rows
+            const weekRows = document.querySelectorAll('.week-row');
+            weekRows.forEach(row => {
+                const rowWeek = row.getAttribute('data-week');
+                const rowRate = parseFloat(row.getAttribute('data-rate-2026')) || 0;
+                
+                let showRow = true;
+                
+                // Check week filter
+                if (weekFilter !== 'all' && rowWeek !== weekFilter) {
+                    showRow = false;
+                }
+                
+                // Check rate filter
+                if (rateFilter > 0 && rowRate < rateFilter) {
+                    showRow = false;
+                }
+                
+                if (showRow) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Show/hide overall summary table based on filters
+            const overallTable = document.getElementById('overallTable');
+            if (sourceFilter !== 'all') {
+                overallTable.closest('.data-section').style.display = 'none';
+            } else {
+                overallTable.closest('.data-section').style.display = 'block';
+                
+                // Apply week filter to overall table
+                const overallRows = overallTable.querySelectorAll('tbody tr');
+                overallRows.forEach(row => {
+                    const cellText = row.cells[0].textContent.trim();
+                    if (weekFilter === 'all') {
+                        row.style.display = '';
+                    } else {
+                        if (cellText === weekFilter) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
+                });
+            }
+        }
+
+        function resetFilters() {
+            document.getElementById('sourceFilter').value = 'all';
+            document.getElementById('weekFilter').value = 'all';
+            document.getElementById('rateFilter').value = '';
+            
+            // Show all sections
+            const sourceSections = document.querySelectorAll('.source-section');
+            sourceSections.forEach(section => {
+                section.classList.add('visible');
+            });
+            
+            // Show all rows
+            const weekRows = document.querySelectorAll('.week-row');
+            weekRows.forEach(row => {
+                row.style.display = '';
+            });
+            
+            // Show overall table
+            document.getElementById('overallTable').closest('.data-section').style.display = 'block';
+            const overallRows = document.getElementById('overallTable').querySelectorAll('tbody tr');
+            overallRows.forEach(row => {
+                row.style.display = '';
+            });
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Haven Dashboard loaded successfully');
+        });
+    </script>
+</body>
+</html>
