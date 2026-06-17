@@ -211,6 +211,7 @@
             padding: 10px;
             background: #f8f9fa;
             border-radius: 6px;
+            font-style: italic;
         }
 
         .data-table {
@@ -342,12 +343,12 @@
 </head>
 <body>
     <div class="header">
-        <h1>📊 Show Data Dashboard - YoY Comparison</h1>
+        <h1>Show Data Dashboard - YoY Comparison</h1>
         <p>Year-on-Year Analysis: 2026 vs 2025 | Last 4 Weeks | By Source Channel</p>
     </div>
 
     <div class="filters">
-        <h3>🔍 Interactive Filters</h3>
+        <h3>Interactive Filters</h3>
         <div class="filter-group">
             <label>Source Channel:</label>
             <select id="sourceFilter">
@@ -385,7 +386,7 @@
 
     <!-- HEADLINE SECTION -->
     <div class="headline-section">
-        <h2>📈 Grand Total Performance</h2>
+        <h2>Grand Total Performance</h2>
         <div class="metrics-grid">
             <div class="metric-card">
                 <div class="metric-label">Appointments Booked</div>
@@ -411,9 +412,9 @@
                     </div>
                     <div class="metric-value">
                         <div class="metric-year year-2025">2025</div>
-                        <div class="metric-number year-2025">483</div>
+                        <div class="metric-number year-2025">536</div>
                     </div>
-                    <div class="variance-badge variance-positive">+40</div>
+                    <div class="variance-badge variance-negative">-13</div>
                 </div>
             </div>
 
@@ -426,9 +427,9 @@
                     </div>
                     <div class="metric-value">
                         <div class="metric-year year-2025">2025</div>
-                        <div class="metric-number year-2025">36%</div>
+                        <div class="metric-number year-2025">40%</div>
                     </div>
-                    <div class="variance-badge variance-negative">-1%</div>
+                    <div class="variance-badge variance-negative">-5%</div>
                 </div>
             </div>
         </div>
@@ -436,7 +437,7 @@
 
     <!-- OVERALL SUMMARY TABLE -->
     <div class="data-section">
-        <h2>📊 Overall Summary - Week Breakdown (All Sources Combined)</h2>
+        <h2>Overall Summary - Week Breakdown (All Sources Combined)</h2>
         <table class="data-table" id="overallTable">
             <thead>
                 <tr>
@@ -524,11 +525,11 @@
 
     <!-- SOURCE CHANNEL BREAKDOWNS -->
     <div class="data-section">
-        <h2>🔗 Individual Source Channel Breakdowns</h2>
+        <h2>Individual Source Channel Breakdowns</h2>
 
         <!-- Brochure Request -->
         <div class="source-section visible" data-source="Brochure Request">
-            <h3>📬 Brochure Request</h3>
+            <h3>Brochure Request</h3>
             <table class="data-table source-table" data-source="Brochure Request">
                 <thead>
                     <tr>
@@ -628,7 +629,7 @@
 
         <!-- Chat -->
         <div class="source-section visible" data-source="Chat">
-            <h3>💬 Chat</h3>
+            <h3>Chat</h3>
             <table class="data-table source-table" data-source="Chat">
                 <thead>
                     <tr>
@@ -704,7 +705,7 @@
 
         <!-- CS Quiz -->
         <div class="source-section visible" data-source="CS Quiz">
-            <h3>❓ CS Quiz</h3>
+            <h3>CS Quiz</h3>
             <table class="data-table source-table" data-source="CS Quiz">
                 <thead>
                     <tr>
@@ -804,7 +805,7 @@
 
         <!-- Enquiry -->
         <div class="source-section visible" data-source="Enquiry">
-            <h3>✉️ Enquiry</h3>
+            <h3>Enquiry</h3>
             <table class="data-table source-table" data-source="Enquiry">
                 <thead>
                     <tr>
@@ -904,7 +905,7 @@
 
         <!-- Facebook -->
         <div class="source-section visible" data-source="Facebook">
-            <h3>📘 Facebook</h3>
+            <h3>Facebook</h3>
             <table class="data-table source-table" data-source="Facebook">
                 <thead>
                     <tr>
@@ -992,7 +993,7 @@
 
         <!-- MHC (external source) -->
         <div class="source-section visible" data-source="MHC">
-            <h3>🏠 MHC (external source)</h3>
+            <h3>MHC (external source)</h3>
             <table class="data-table source-table" data-source="MHC">
                 <thead>
                     <tr>
@@ -1092,7 +1093,7 @@
 
         <!-- RCS -->
         <div class="source-section visible" data-source="RCS">
-            <h3>📞 RCS</h3>
+            <h3>RCS</h3>
             <table class="data-table source-table" data-source="RCS">
                 <thead>
                     <tr>
@@ -1168,7 +1169,7 @@
 
         <!-- Telesales Inbound Call -->
         <div class="source-section visible" data-source="Telesales Inbound Call">
-            <h3>📲 Telesales Inbound Call</h3>
+            <h3>Telesales Inbound Call</h3>
             <table class="data-table source-table" data-source="Telesales Inbound Call">
                 <thead>
                     <tr>
@@ -1268,7 +1269,7 @@
 
         <!-- Visit Request -->
         <div class="source-section visible" data-source="Visit Request">
-            <h3>🏖️ Visit Request</h3>
+            <h3>Visit Request</h3>
             <table class="data-table source-table" data-source="Visit Request">
                 <thead>
                     <tr>
@@ -1296,11 +1297,11 @@
                         <td>213</td>
                         <td>42%</td>
                         <td>517</td>
-                        <td>213</td>
-                        <td>41%</td>
+                        <td>266</td>
+                        <td>51%</td>
                         <td class="variance-cell-negative">-15</td>
-                        <td class="variance-cell-neutral">0</td>
-                        <td class="variance-cell-positive">+1%</td>
+                        <td class="variance-cell-negative">-53</td>
+                        <td class="variance-cell-negative">-9%</td>
                     </tr>
                     <tr class="week-row" data-week="1 week" data-rate-2026="43">
                         <td>1 week</td>
@@ -1368,7 +1369,7 @@
 
         <!-- WhatsApp -->
         <div class="source-section visible" data-source="WhatsApp">
-            <h3>💬 WhatsApp</h3>
+            <h3>WhatsApp</h3>
             <table class="data-table source-table" data-source="WhatsApp">
                 <thead>
                     <tr>
@@ -1457,7 +1458,7 @@
     </div>
 
     <div class="footer">
-        <p>Haven YoY Show Data Dashboard | Generated from Excel source data | All numbers verified against source spreadsheet</p>
+        <p>Haven YoY Show Data Dashboard | Generated from corrected Excel source data | All numbers verified and updated</p>
     </div>
 
     <script>
@@ -1485,12 +1486,10 @@
                 
                 let showRow = true;
                 
-                // Check week filter
                 if (weekFilter !== 'all' && rowWeek !== weekFilter) {
                     showRow = false;
                 }
                 
-                // Check rate filter
                 if (rateFilter > 0 && rowRate < rateFilter) {
                     showRow = false;
                 }
@@ -1509,7 +1508,6 @@
             } else {
                 overallTable.closest('.data-section').style.display = 'block';
                 
-                // Apply week filter to overall table
                 const overallRows = overallTable.querySelectorAll('tbody tr');
                 overallRows.forEach(row => {
                     const cellText = row.cells[0].textContent.trim();
@@ -1531,19 +1529,16 @@
             document.getElementById('weekFilter').value = 'all';
             document.getElementById('rateFilter').value = '';
             
-            // Show all sections
             const sourceSections = document.querySelectorAll('.source-section');
             sourceSections.forEach(section => {
                 section.classList.add('visible');
             });
             
-            // Show all rows
             const weekRows = document.querySelectorAll('.week-row');
             weekRows.forEach(row => {
                 row.style.display = '';
             });
             
-            // Show overall table
             document.getElementById('overallTable').closest('.data-section').style.display = 'block';
             const overallRows = document.getElementById('overallTable').querySelectorAll('tbody tr');
             overallRows.forEach(row => {
