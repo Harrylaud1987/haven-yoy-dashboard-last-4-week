@@ -250,29 +250,35 @@
             color: #495057;
             border-left: none;
         }
-        /* Enhanced column colouring for 2026 data */
+        /* Enhanced column colouring for 2026 data - now includes 5 columns */
         .data-table tbody td:nth-child(2),
         .data-table tbody td:nth-child(3),
         .data-table tbody td:nth-child(4),
-        .data-table tbody td:nth-child(5) {
+        .data-table tbody td:nth-child(5),
+        .data-table tbody td:nth-child(6) {
             background: rgba(0, 119, 182, 0.08);
         }
-        /* Enhanced column colouring for 2025 data */
-        .data-table tbody td:nth-child(6),
+        /* Enhanced column colouring for 2025 data - now includes 5 columns */
         .data-table tbody td:nth-child(7),
-        .data-table tbody td:nth-child(8) {
+        .data-table tbody td:nth-child(8),
+        .data-table tbody td:nth-child(9),
+        .data-table tbody td:nth-child(10),
+        .data-table tbody td:nth-child(11) {
             background: rgba(253, 126, 20, 0.08);
         }
         /* Stronger hover effects */
         .data-table tbody tr:hover td:nth-child(2),
         .data-table tbody tr:hover td:nth-child(3),
         .data-table tbody tr:hover td:nth-child(4),
-        .data-table tbody tr:hover td:nth-child(5) {
+        .data-table tbody tr:hover td:nth-child(5),
+        .data-table tbody tr:hover td:nth-child(6) {
             background: rgba(0, 119, 182, 0.15);
         }
-        .data-table tbody tr:hover td:nth-child(6),
         .data-table tbody tr:hover td:nth-child(7),
-        .data-table tbody tr:hover td:nth-child(8) {
+        .data-table tbody tr:hover td:nth-child(8),
+        .data-table tbody tr:hover td:nth-child(9),
+        .data-table tbody tr:hover td:nth-child(10),
+        .data-table tbody tr:hover td:nth-child(11) {
             background: rgba(253, 126, 20, 0.15);
         }
         .week-row {
@@ -441,96 +447,120 @@
             </div>
         </div>
     </div>
-    <!-- SOURCE COMPARISON TABLE - RESTRUCTURED -->
+    <!-- SOURCE COMPARISON TABLE - WITH APPOINTMENTS AND ENQS/SHOW FOR BOTH YEARS -->
     <div class="data-section">
         <h2>Source Channel Performance Overview</h2>
         <table class="data-table" id="sourceOverviewTable">
             <thead>
                 <tr>
                     <th rowspan="2">Source Channel</th>
-                    <th colspan="4" class="col-2026">2026 Performance</th>
-                    <th colspan="3" class="col-2025">2025 Performance</th>
+                    <th colspan="5" class="col-2026">2026 Performance</th>
+                    <th colspan="5" class="col-2025">2025 Performance</th>
                 </tr>
                 <tr>
                     <th class="col-2026">Enquiries</th>
+                    <th class="col-2026">Appts</th>
                     <th class="col-2026">Shows</th>
                     <th class="col-2026">Rate</th>
                     <th class="col-2026">Enqs/Show</th>
                     <th class="col-2025">Enquiries</th>
+                    <th class="col-2025">Appts</th>
                     <th class="col-2025">Shows</th>
                     <th class="col-2025">Rate</th>
+                    <th class="col-2025">Enqs/Show</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Brochure Request</td>
                     <td>4,787</td>
+                    <td>645</td>
                     <td>215</td>
                     <td>33%</td>
                     <td>22.3</td>
                     <td>6,246</td>
+                    <td>626</td>
                     <td>205</td>
                     <td>33%</td>
+                    <td>30.5</td>
                 </tr>
                 <tr>
                     <td>MHC (external source)</td>
                     <td>1,804</td>
+                    <td>127</td>
                     <td>29</td>
                     <td>23%</td>
                     <td>62.2</td>
                     <td>2,239</td>
+                    <td>102</td>
                     <td>24</td>
                     <td>24%</td>
+                    <td>93.3</td>
                 </tr>
                 <tr>
                     <td>Facebook</td>
                     <td>876</td>
+                    <td>83</td>
                     <td>6</td>
                     <td>7%</td>
                     <td>146.0</td>
                     <td>118</td>
+                    <td>14</td>
                     <td>5</td>
                     <td>36%</td>
+                    <td>23.6</td>
                 </tr>
                 <tr>
                     <td>CS Quiz</td>
                     <td>782</td>
+                    <td>60</td>
                     <td>18</td>
                     <td>30%</td>
                     <td>43.4</td>
                     <td>267</td>
                     <td class="no-data">No data</td>
                     <td class="no-data">No data</td>
+                    <td class="no-data">No data</td>
+                    <td class="no-data">—</td>
                 </tr>
                 <tr>
                     <td>Visit Request</td>
                     <td>636</td>
+                    <td>502</td>
                     <td>213</td>
                     <td>42%</td>
                     <td>3.0</td>
                     <td>630</td>
+                    <td>517</td>
                     <td>266</td>
                     <td>51%</td>
+                    <td>2.4</td>
                 </tr>
                 <tr>
                     <td>Enquiry</td>
                     <td>193</td>
+                    <td>35</td>
                     <td>13</td>
                     <td>37%</td>
                     <td>14.8</td>
                     <td>0</td>
                     <td class="no-data">No data</td>
                     <td class="no-data">No data</td>
+                    <td class="no-data">No data</td>
+                    <td class="no-data">—</td>
                 </tr>
                 <tr>
                     <td>RCS/WhatsApp</td>
                     <td>178</td>
+                    <td>10</td>
                     <td>4</td>
                     <td>40%</td>
                     <td>44.5</td>
                     <td>0</td>
                     <td class="no-data">No data</td>
                     <td class="no-data">No data</td>
+                    <td class="no-data">No data</td>
+                    <td class="no-data">—</td>
                 </tr>
             </tbody>
         </table>
