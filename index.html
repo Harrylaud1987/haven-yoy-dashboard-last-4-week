@@ -10,14 +10,12 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: #f5f7fa;
             color: #2c3e50;
             padding: 20px;
         }
-
         .header {
             background: linear-gradient(135deg, #00a0e3 0%, #0077b6 100%);
             color: white;
@@ -26,18 +24,15 @@
             margin-bottom: 30px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
         .header h1 {
             font-size: 32px;
             margin-bottom: 10px;
             font-weight: 700;
         }
-
         .header p {
             font-size: 16px;
             opacity: 0.95;
         }
-
         .filters {
             background: white;
             padding: 20px;
@@ -45,26 +40,22 @@
             margin-bottom: 30px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-
         .filters h3 {
             margin-bottom: 15px;
             color: #0077b6;
             font-size: 18px;
         }
-
         .filter-group {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
             align-items: center;
         }
-
         .filter-group label {
             font-weight: 600;
             color: #2c3e50;
             margin-right: 10px;
         }
-
         .filter-group select, .filter-group input {
             padding: 8px 15px;
             border: 2px solid #e0e6ed;
@@ -74,17 +65,14 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-
         .filter-group select:hover, .filter-group input:hover {
             border-color: #00a0e3;
         }
-
         .filter-group select:focus, .filter-group input:focus {
             outline: none;
             border-color: #0077b6;
             box-shadow: 0 0 0 3px rgba(0, 160, 227, 0.1);
         }
-
         .filter-group button {
             padding: 8px 20px;
             background: #00a0e3;
@@ -95,12 +83,10 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-
         .filter-group button:hover {
             background: #0077b6;
             transform: translateY(-1px);
         }
-
         .headline-section {
             background: white;
             padding: 30px;
@@ -108,63 +94,68 @@
             margin-bottom: 30px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-
         .headline-section h2 {
             color: #0077b6;
             margin-bottom: 20px;
             font-size: 24px;
         }
-
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
         }
-
         .metric-card {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             padding: 20px;
             border-radius: 10px;
             border-left: 4px solid #00a0e3;
         }
-
         .metric-label {
             font-size: 14px;
             color: #6c757d;
             margin-bottom: 8px;
             font-weight: 600;
         }
-
         .metric-values {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 15px;
         }
-
         .metric-value {
             flex: 1;
         }
-
         .metric-year {
             font-size: 11px;
             font-weight: 600;
             margin-bottom: 4px;
         }
-
         .year-2026 {
             color: #0077b6;
+            font-weight: 700;
         }
-
         .year-2025 {
             color: #fd7e14;
+            font-weight: 700;
         }
-
         .metric-number {
             font-size: 28px;
             font-weight: 700;
         }
-
+        .metric-number.year-2026 {
+            color: #0077b6;
+        }
+        .metric-number.year-2025 {
+            color: #fd7e14;
+        }
+        .metric-card .metric-value:first-of-type {
+            border-right: 2px solid #0077b6;
+            padding-right: 15px;
+        }
+        .metric-card .metric-value:nth-of-type(2) {
+            border-right: 2px solid #fd7e14;
+            padding-right: 15px;
+        }
         .variance-badge {
             padding: 6px 12px;
             border-radius: 20px;
@@ -172,22 +163,18 @@
             font-weight: 700;
             white-space: nowrap;
         }
-
         .variance-positive {
             background: #d4edda;
             color: #155724;
         }
-
         .variance-negative {
             background: #f8d7da;
             color: #721c24;
         }
-
         .variance-neutral {
             background: #e9ecef;
             color: #6c757d;
         }
-
         .data-section {
             background: white;
             padding: 30px;
@@ -195,7 +182,6 @@
             margin-bottom: 30px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-
         .data-section h2 {
             color: #0077b6;
             margin-bottom: 20px;
@@ -203,7 +189,6 @@
             border-bottom: 3px solid #00a0e3;
             padding-bottom: 10px;
         }
-
         .data-section h3 {
             color: #495057;
             margin: 25px 0 15px 0;
@@ -213,19 +198,16 @@
             border-radius: 6px;
             font-style: italic;
         }
-
         .data-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
             font-size: 14px;
         }
-
         .data-table thead {
             background: linear-gradient(135deg, #0077b6 0%, #005a8c 100%);
             color: white;
         }
-
         .data-table thead th {
             padding: 12px;
             text-align: center;
@@ -233,113 +215,116 @@
             font-size: 13px;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
         .data-table thead th:first-child {
             text-align: left;
             min-width: 150px;
         }
-
         .col-2026 {
-            background: rgba(0, 119, 182, 0.1) !important;
+            background: #0077b6 !important;
+            color: white;
+            font-weight: 700;
         }
-
         .col-2025 {
-            background: rgba(253, 126, 20, 0.1) !important;
+            background: #fd7e14 !important;
+            color: white;
+            font-weight: 700;
         }
-
         .col-variance {
-            background: rgba(108, 117, 125, 0.05) !important;
+            background: rgba(108, 117, 125, 0.1) !important;
         }
-
-        .col-enquiries {
-            background: rgba(111, 66, 193, 0.1) !important;
-        }
-
         .data-table tbody tr {
             border-bottom: 1px solid #e9ecef;
             transition: all 0.2s;
         }
-
         .data-table tbody tr:hover {
             background: #f8f9fa;
         }
-
         .data-table tbody td {
             padding: 12px;
             text-align: center;
             border-left: 1px solid #e9ecef;
         }
-
         .data-table tbody td:first-child {
             text-align: left;
             font-weight: 600;
             color: #495057;
             border-left: none;
         }
-
+        /* Enhanced column colouring for 2026 data */
+        .data-table tbody td:nth-child(2),
+        .data-table tbody td:nth-child(3),
+        .data-table tbody td:nth-child(4),
+        .data-table tbody td:nth-child(5) {
+            background: rgba(0, 119, 182, 0.08);
+        }
+        /* Enhanced column colouring for 2025 data */
+        .data-table tbody td:nth-child(6),
+        .data-table tbody td:nth-child(7),
+        .data-table tbody td:nth-child(8) {
+            background: rgba(253, 126, 20, 0.08);
+        }
+        /* Stronger hover effects */
+        .data-table tbody tr:hover td:nth-child(2),
+        .data-table tbody tr:hover td:nth-child(3),
+        .data-table tbody tr:hover td:nth-child(4),
+        .data-table tbody tr:hover td:nth-child(5) {
+            background: rgba(0, 119, 182, 0.15);
+        }
+        .data-table tbody tr:hover td:nth-child(6),
+        .data-table tbody tr:hover td:nth-child(7),
+        .data-table tbody tr:hover td:nth-child(8) {
+            background: rgba(253, 126, 20, 0.15);
+        }
         .week-row {
             background: #f8f9fa;
         }
-
         .week-row td:first-child {
             padding-left: 30px;
             font-weight: 500;
             color: #6c757d;
         }
-
         .no-data {
             color: #adb5bd;
             font-style: italic;
         }
-
         .variance-cell-positive {
             color: #155724;
             font-weight: 600;
         }
-
         .variance-cell-negative {
             color: #721c24;
             font-weight: 600;
         }
-
         .variance-cell-neutral {
             color: #6c757d;
         }
-
         .source-section {
             display: none;
         }
-
         .source-section.visible {
             display: block;
         }
-
         .footer {
             text-align: center;
             padding: 20px;
             color: #6c757d;
             font-size: 14px;
         }
-
         @media (max-width: 768px) {
             .data-table {
                 font-size: 12px;
             }
-
             .data-table thead th,
             .data-table tbody td {
                 padding: 8px 4px;
             }
-
             .header h1 {
                 font-size: 24px;
             }
-
             .metric-number {
                 font-size: 20px;
             }
         }
-
         .hidden {
             display: none;
         }
@@ -350,7 +335,6 @@
         <h1>Show Data Dashboard - YoY Comparison</h1>
         <p>Year-on-Year Analysis: 2026 vs 2025 | Last 4 Weeks | By Source Channel</p>
     </div>
-
     <div class="filters">
         <h3>Interactive Filters</h3>
         <div class="filter-group">
@@ -365,7 +349,6 @@
                 <option value="RCS/WhatsApp">RCS/WhatsApp</option>
                 <option value="Visit Request">Visit Request</option>
             </select>
-
             <label>Week:</label>
             <select id="weekFilter">
                 <option value="all">All Weeks</option>
@@ -375,16 +358,13 @@
                 <option value="4 weeks">Week 4</option>
                 <option value="5 weeks and over">Week 5+</option>
             </select>
-
             <label>Show Rate ≥:</label>
             <input type="number" id="rateFilter" placeholder="e.g., 30" min="0" max="100" style="width: 100px;">
             <span style="color: #6c757d;">%</span>
-
             <button onclick="applyFilters()">Apply Filters</button>
             <button onclick="resetFilters()" style="background: #6c757d;">Reset</button>
         </div>
     </div>
-
     <!-- HEADLINE SECTION -->
     <div class="headline-section">
         <h2>Grand Total Performance</h2>
@@ -403,7 +383,6 @@
                     <div class="variance-badge variance-negative">-244</div>
                 </div>
             </div>
-
             <div class="metric-card">
                 <div class="metric-label">Appointments Booked</div>
                 <div class="metric-values">
@@ -418,7 +397,6 @@
                     <div class="variance-badge variance-positive">+203</div>
                 </div>
             </div>
-
             <div class="metric-card">
                 <div class="metric-label">Shows Generated</div>
                 <div class="metric-values">
@@ -433,7 +411,6 @@
                     <div class="variance-badge variance-negative">-4</div>
                 </div>
             </div>
-
             <div class="metric-card">
                 <div class="metric-label">Show Rate Conversion</div>
                 <div class="metric-values">
@@ -448,7 +425,6 @@
                     <div class="variance-badge variance-negative">-6%</div>
                 </div>
             </div>
-
             <div class="metric-card">
                 <div class="metric-label">Avg Enquiries per Show</div>
                 <div class="metric-values">
@@ -465,127 +441,100 @@
             </div>
         </div>
     </div>
-
-    <!-- SOURCE COMPARISON TABLE -->
+    <!-- SOURCE COMPARISON TABLE - RESTRUCTURED -->
     <div class="data-section">
         <h2>Source Channel Performance Overview</h2>
         <table class="data-table" id="sourceOverviewTable">
             <thead>
                 <tr>
                     <th rowspan="2">Source Channel</th>
-                    <th colspan="4" class="col-enquiries">Enquiries</th>
-                    <th colspan="3" class="col-2026">2026 Performance</th>
+                    <th colspan="4" class="col-2026">2026 Performance</th>
                     <th colspan="3" class="col-2025">2025 Performance</th>
                 </tr>
                 <tr>
-                    <th class="col-enquiries">2026</th>
-                    <th class="col-enquiries">2025</th>
-                    <th class="col-enquiries">Var</th>
-                    <th class="col-enquiries">% Chg</th>
+                    <th class="col-2026">Enquiries</th>
                     <th class="col-2026">Shows</th>
                     <th class="col-2026">Rate</th>
                     <th class="col-2026">Enqs/Show</th>
+                    <th class="col-2025">Enquiries</th>
                     <th class="col-2025">Shows</th>
                     <th class="col-2025">Rate</th>
-                    <th class="col-2025">Enqs/Show</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Brochure Request</td>
                     <td>4,787</td>
-                    <td>6,246</td>
-                    <td class="variance-cell-negative">-1,459</td>
-                    <td class="variance-cell-negative">-23%</td>
                     <td>215</td>
                     <td>33%</td>
                     <td>22.3</td>
+                    <td>6,246</td>
                     <td>205</td>
                     <td>33%</td>
-                    <td>30.5</td>
                 </tr>
                 <tr>
                     <td>MHC (external source)</td>
                     <td>1,804</td>
-                    <td>2,239</td>
-                    <td class="variance-cell-negative">-435</td>
-                    <td class="variance-cell-negative">-19%</td>
                     <td>29</td>
                     <td>23%</td>
                     <td>62.2</td>
+                    <td>2,239</td>
                     <td>24</td>
                     <td>24%</td>
-                    <td>93.3</td>
                 </tr>
                 <tr>
                     <td>Facebook</td>
                     <td>876</td>
-                    <td>118</td>
-                    <td class="variance-cell-positive">+758</td>
-                    <td class="variance-cell-positive">+643%</td>
                     <td>6</td>
                     <td>7%</td>
                     <td>146.0</td>
+                    <td>118</td>
                     <td>5</td>
                     <td>36%</td>
-                    <td>23.6</td>
                 </tr>
                 <tr>
                     <td>CS Quiz</td>
                     <td>782</td>
-                    <td>267</td>
-                    <td class="variance-cell-positive">+515</td>
-                    <td class="variance-cell-positive">+193%</td>
                     <td>18</td>
                     <td>30%</td>
                     <td>43.4</td>
+                    <td>267</td>
                     <td class="no-data">No data</td>
                     <td class="no-data">No data</td>
-                    <td class="no-data">—</td>
                 </tr>
                 <tr>
                     <td>Visit Request</td>
                     <td>636</td>
-                    <td>630</td>
-                    <td class="variance-cell-positive">+6</td>
-                    <td class="variance-cell-positive">+1%</td>
                     <td>213</td>
                     <td>42%</td>
                     <td>3.0</td>
+                    <td>630</td>
                     <td>266</td>
                     <td>51%</td>
-                    <td>2.4</td>
                 </tr>
                 <tr>
                     <td>Enquiry</td>
                     <td>193</td>
-                    <td>0</td>
-                    <td class="variance-cell-positive">+193</td>
-                    <td class="variance-cell-neutral">—</td>
                     <td>13</td>
                     <td>37%</td>
                     <td>14.8</td>
+                    <td>0</td>
                     <td class="no-data">No data</td>
                     <td class="no-data">No data</td>
-                    <td class="no-data">—</td>
                 </tr>
                 <tr>
                     <td>RCS/WhatsApp</td>
                     <td>178</td>
-                    <td>0</td>
-                    <td class="variance-cell-positive">+178</td>
-                    <td class="variance-cell-neutral">—</td>
                     <td>4</td>
                     <td>40%</td>
                     <td>44.5</td>
+                    <td>0</td>
                     <td class="no-data">No data</td>
                     <td class="no-data">No data</td>
-                    <td class="no-data">—</td>
                 </tr>
             </tbody>
         </table>
     </div>
-
     <!-- OVERALL SUMMARY TABLE -->
     <div class="data-section">
         <h2>Overall Summary - Week Breakdown (All Sources Combined)</h2>
@@ -673,11 +622,9 @@
             </tbody>
         </table>
     </div>
-
     <!-- SOURCE CHANNEL BREAKDOWNS -->
     <div class="data-section">
         <h2>Individual Source Channel Breakdowns</h2>
-
         <!-- Brochure Request -->
         <div class="source-section visible" data-source="Brochure Request">
             <h3>Brochure Request</h3>
@@ -793,7 +740,6 @@
                 </tbody>
             </table>
         </div>
-
         <!-- CS Quiz -->
         <div class="source-section visible" data-source="CS Quiz">
             <h3>CS Quiz</h3>
@@ -909,7 +855,6 @@
                 </tbody>
             </table>
         </div>
-
         <!-- Enquiry -->
         <div class="source-section visible" data-source="Enquiry">
             <h3>Enquiry</h3>
@@ -1025,7 +970,6 @@
                 </tbody>
             </table>
         </div>
-
         <!-- Facebook -->
         <div class="source-section visible" data-source="Facebook">
             <h3>Facebook</h3>
@@ -1129,7 +1073,6 @@
                 </tbody>
             </table>
         </div>
-
         <!-- MHC (external source) -->
         <div class="source-section visible" data-source="MHC">
             <h3>MHC (external source)</h3>
@@ -1245,7 +1188,6 @@
                 </tbody>
             </table>
         </div>
-
         <!-- RCS/WhatsApp -->
         <div class="source-section visible" data-source="RCS/WhatsApp">
             <h3>RCS/WhatsApp</h3>
@@ -1349,7 +1291,6 @@
                 </tbody>
             </table>
         </div>
-
         <!-- Visit Request -->
         <div class="source-section visible" data-source="Visit Request">
             <h3>Visit Request</h3>
@@ -1465,19 +1406,15 @@
                 </tbody>
             </table>
         </div>
-
     </div>
-
     <div class="footer">
         <p>Haven YoY Show Data Dashboard | Full conversion funnel analysis: Enquiries → Appointments → Shows | Excludes Chat and Telesales Inbound Call</p>
     </div>
-
     <script>
         function applyFilters() {
             const sourceFilter = document.getElementById('sourceFilter').value;
             const weekFilter = document.getElementById('weekFilter').value;
             const rateFilter = parseFloat(document.getElementById('rateFilter').value) || 0;
-
             // Handle source filter
             const sourceSections = document.querySelectorAll('.source-section');
             sourceSections.forEach(section => {
@@ -1488,41 +1425,39 @@
                     section.classList.remove('visible');
                 }
             });
-
             // Handle week and rate filters on table rows
             const weekRows = document.querySelectorAll('.week-row');
             weekRows.forEach(row => {
                 const rowWeek = row.getAttribute('data-week');
                 const rowRate = parseFloat(row.getAttribute('data-rate-2026')) || 0;
-                
+
                 let showRow = true;
-                
+
                 if (weekFilter !== 'all' && rowWeek !== weekFilter) {
                     showRow = false;
                 }
-                
+
                 if (rateFilter > 0 && rowRate < rateFilter) {
                     showRow = false;
                 }
-                
+
                 if (showRow) {
                     row.style.display = '';
                 } else {
                     row.style.display = 'none';
                 }
             });
-
             // Show/hide overall summary table based on filters
             const overallTable = document.getElementById('overallTable');
             const sourceOverviewTable = document.getElementById('sourceOverviewTable');
-            
+
             if (sourceFilter !== 'all') {
                 overallTable.closest('.data-section').style.display = 'none';
                 sourceOverviewTable.closest('.data-section').style.display = 'none';
             } else {
                 overallTable.closest('.data-section').style.display = 'block';
                 sourceOverviewTable.closest('.data-section').style.display = 'block';
-                
+
                 const overallRows = overallTable.querySelectorAll('tbody tr');
                 overallRows.forEach(row => {
                     const cellText = row.cells[0].textContent.trim();
@@ -1538,22 +1473,21 @@
                 });
             }
         }
-
         function resetFilters() {
             document.getElementById('sourceFilter').value = 'all';
             document.getElementById('weekFilter').value = 'all';
             document.getElementById('rateFilter').value = '';
-            
+
             const sourceSections = document.querySelectorAll('.source-section');
             sourceSections.forEach(section => {
                 section.classList.add('visible');
             });
-            
+
             const weekRows = document.querySelectorAll('.week-row');
             weekRows.forEach(row => {
                 row.style.display = '';
             });
-            
+
             document.getElementById('overallTable').closest('.data-section').style.display = 'block';
             document.getElementById('sourceOverviewTable').closest('.data-section').style.display = 'block';
             const overallRows = document.getElementById('overallTable').querySelectorAll('tbody tr');
@@ -1561,7 +1495,6 @@
                 row.style.display = '';
             });
         }
-
         // Initialize on page load
         window.addEventListener('DOMContentLoaded', () => {
             console.log('Haven Dashboard loaded with full conversion funnel data');
